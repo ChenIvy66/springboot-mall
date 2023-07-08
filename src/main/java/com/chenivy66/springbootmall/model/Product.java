@@ -1,5 +1,7 @@
 package com.chenivy66.springbootmall.model;
 
+import com.chenivy66.springbootmall.constant.ProductCategory;
+
 import java.util.Date;
 
 public class Product {
@@ -19,11 +21,11 @@ public class Product {
         this.product_name = product_name;
     }
 
-    public String getCategory() {
+    public ProductCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ProductCategory category) {
         this.category = category;
     }
 
@@ -77,7 +79,7 @@ public class Product {
 
     private Integer product_id;
     private String product_name;
-    private String category;
+    private ProductCategory category;
     private String image_url;
     private Integer price;
     private Integer stock;
