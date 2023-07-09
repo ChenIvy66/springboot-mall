@@ -12,8 +12,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
-
+@Validated
 @RestController
 public class ProductController {
     @Autowired
@@ -24,7 +26,9 @@ public class ProductController {
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
             @RequestParam(defaultValue = "created_date") String orderBy,
-            @RequestParam(defaultValue = "desc") String sort
+            @RequestParam(defaultValue = "desc") String sort,
+            @RequestParam(defaultValue = "2") @Min(0) @Max(100) Integer limit,
+            @RequestParam(defaultValue = "0") @Min(0)  Integer offset
             ){
 
         ProductQueryPamas productQueryPamas = new ProductQueryPamas();
@@ -32,6 +36,8 @@ public class ProductController {
         productQueryPamas.setSearch(search);
         productQueryPamas.setOrderBy(orderBy);
         productQueryPamas.setSort(sort);
+        productQueryPamas.setLimit(limit);
+        productQueryPamas.setOffset(offset);
         List<Product> productList = productService.getProducts(productQueryPamas);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);

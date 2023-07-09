@@ -31,6 +31,7 @@ public class ProductDaoImpl implements ProductDao {
                 + " price, stock, description, created_date, last_modified_date"
                 + " from product WHERE 1=1";
 
+        //類別
         Map<String,Object> map= new HashMap<>();
         if(productQueryPamas.getCategory()!=null)
         {
@@ -38,12 +39,14 @@ public class ProductDaoImpl implements ProductDao {
             sql=sql + " AND category=:category";
         }
 
+        //搜尋
         if(productQueryPamas.getSearch()!=null)
         {
             map.put("search","%"+productQueryPamas.getSearch()+"%");
             sql=sql + " AND product_name like :search";
         }
 
+        //排序
         if(productQueryPamas.getOrderBy()!=null)
         {
             sql=sql + " ORDER BY " + productQueryPamas.getOrderBy();
@@ -53,6 +56,12 @@ public class ProductDaoImpl implements ProductDao {
                 sql=sql + " " +productQueryPamas.getSort();
             }
         }
+
+        //分頁
+        sql=sql + "  LIMIT :limit OFFSET :offset";
+        map.put("limit",productQueryPamas.getLimit());
+        map.put("offset",productQueryPamas.getOffset());
+
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
 
