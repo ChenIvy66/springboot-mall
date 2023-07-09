@@ -30,20 +30,8 @@ public class ProductDaoImpl implements ProductDao {
         String sql="SELECT count(*)"
                 + " from product WHERE 1=1";
 
-        //類別
         Map<String,Object> map= new HashMap<>();
-        if(productQueryPamas.getCategory()!=null)
-        {
-            map.put("category",productQueryPamas.getCategory().name());
-            sql=sql + " AND category=:category";
-        }
-
-        //搜尋
-        if(productQueryPamas.getSearch()!=null)
-        {
-            map.put("search","%"+productQueryPamas.getSearch()+"%");
-            sql=sql + " AND product_name like :search";
-        }
+        addFilterSql(sql,map,productQueryPamas);
 
         Integer total = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
 
@@ -58,18 +46,7 @@ public class ProductDaoImpl implements ProductDao {
 
         //類別
         Map<String,Object> map= new HashMap<>();
-        if(productQueryPamas.getCategory()!=null)
-        {
-            map.put("category",productQueryPamas.getCategory().name());
-            sql=sql + " AND category=:category";
-        }
-
-        //搜尋
-        if(productQueryPamas.getSearch()!=null)
-        {
-            map.put("search","%"+productQueryPamas.getSearch()+"%");
-            sql=sql + " AND product_name like :search";
-        }
+        addFilterSql(sql,map,productQueryPamas);
 
         //排序
         if(productQueryPamas.getOrderBy()!=null)
@@ -193,6 +170,23 @@ public class ProductDaoImpl implements ProductDao {
         map.put("productId",productId);
 
         namedParameterJdbcTemplate.update(sql,map);
+    }
+
+    private void addFilterSql(String sql,Map<String,Object> map,ProductQueryPamas productQueryPamas){
+        //類別
+
+        if(productQueryPamas.getCategory()!=null)
+        {
+            map.put("category",productQueryPamas.getCategory().name());
+            sql=sql + " AND category=:category";
+        }
+
+        //搜尋
+        if(productQueryPamas.getSearch()!=null)
+        {
+            map.put("search","%"+productQueryPamas.getSearch()+"%");
+            sql=sql + " AND product_name like :search";
+        }
     }
 }
 
