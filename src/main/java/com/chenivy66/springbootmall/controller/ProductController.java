@@ -5,6 +5,7 @@ import com.chenivy66.springbootmall.dto.ProductQueryPamas;
 import com.chenivy66.springbootmall.dto.ProductRequest;
 import com.chenivy66.springbootmall.model.Product;
 import com.chenivy66.springbootmall.service.ProductService;
+import com.chenivy66.springbootmall.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
             @RequestParam(defaultValue = "created_date") String orderBy,
@@ -40,7 +41,15 @@ public class ProductController {
         productQueryPamas.setOffset(offset);
         List<Product> productList = productService.getProducts(productQueryPamas);
 
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+        Integer total = productService.countProducts(productQueryPamas);
+
+        Page page = new Page();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResults(productList);
+
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
     @GetMapping("/products/{productId}")
