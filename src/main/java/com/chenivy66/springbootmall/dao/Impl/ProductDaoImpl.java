@@ -1,5 +1,6 @@
 package com.chenivy66.springbootmall.dao.Impl;
 
+import com.chenivy66.springbootmall.constant.ProductCategory;
 import com.chenivy66.springbootmall.dao.ProductDao;
 import com.chenivy66.springbootmall.dto.ProductRequest;
 import com.chenivy66.springbootmall.model.Product;
@@ -24,14 +25,23 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts() {
+    public List<Product> getProducts(ProductCategory category,String search) {
         String sql="SELECT product_Id, product_name, category, image_url,"
                 + " price, stock, description, created_date, last_modified_date"
-                + " from product ";
-//                + " WHERE product_Id=:productId";
+                + " from product WHERE 1=1";
 
         Map<String,Object> map= new HashMap<>();
-//        map.put("productId",productId);
+        if(category!=null)
+        {
+            map.put("category",category.name());
+            sql=sql + " AND category=:category";
+        }
+
+        if(search!=null)
+        {
+            map.put("search","%"+search+"%");
+            sql=sql + " AND product_name like :search";
+        }
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
 
