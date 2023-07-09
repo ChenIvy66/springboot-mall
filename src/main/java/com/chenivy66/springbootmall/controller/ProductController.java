@@ -1,6 +1,7 @@
 package com.chenivy66.springbootmall.controller;
 
 import com.chenivy66.springbootmall.constant.ProductCategory;
+import com.chenivy66.springbootmall.dto.ProductQueryPamas;
 import com.chenivy66.springbootmall.dto.ProductRequest;
 import com.chenivy66.springbootmall.model.Product;
 import com.chenivy66.springbootmall.service.ProductService;
@@ -23,7 +24,11 @@ public class ProductController {
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search
             ){
-        List<Product> productList = productService.getProducts(category,search);
+
+        ProductQueryPamas productQueryPamas = new ProductQueryPamas();
+        productQueryPamas.setCategory(category);
+        productQueryPamas.setSearch(search);
+        List<Product> productList = productService.getProducts(productQueryPamas);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }

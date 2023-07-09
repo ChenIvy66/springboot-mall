@@ -2,6 +2,7 @@ package com.chenivy66.springbootmall.service.Impl;
 
 import com.chenivy66.springbootmall.constant.ProductCategory;
 import com.chenivy66.springbootmall.dao.ProductDao;
+import com.chenivy66.springbootmall.dto.ProductQueryPamas;
 import com.chenivy66.springbootmall.dto.ProductRequest;
 import com.chenivy66.springbootmall.model.Product;
 import com.chenivy66.springbootmall.service.ProductService;
@@ -17,8 +18,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category,String search) {
-        return productDao.getProducts(category,search);
+    public List<Product> getProducts(ProductQueryPamas productQueryPamas) {
+        return productDao.getProducts(productQueryPamas);
     }
 
     @Override

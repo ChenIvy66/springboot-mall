@@ -2,6 +2,7 @@ package com.chenivy66.springbootmall.dao.Impl;
 
 import com.chenivy66.springbootmall.constant.ProductCategory;
 import com.chenivy66.springbootmall.dao.ProductDao;
+import com.chenivy66.springbootmall.dto.ProductQueryPamas;
 import com.chenivy66.springbootmall.dto.ProductRequest;
 import com.chenivy66.springbootmall.model.Product;
 import com.chenivy66.springbootmall.rowmapper.ProductRowMapper;
@@ -25,21 +26,21 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts(ProductCategory category,String search) {
+    public List<Product> getProducts(ProductQueryPamas productQueryPamas) {
         String sql="SELECT product_Id, product_name, category, image_url,"
                 + " price, stock, description, created_date, last_modified_date"
                 + " from product WHERE 1=1";
 
         Map<String,Object> map= new HashMap<>();
-        if(category!=null)
+        if(productQueryPamas.getCategory()!=null)
         {
-            map.put("category",category.name());
+            map.put("category",productQueryPamas.getCategory().name());
             sql=sql + " AND category=:category";
         }
 
-        if(search!=null)
+        if(productQueryPamas.getSearch()!=null)
         {
-            map.put("search","%"+search+"%");
+            map.put("search","%"+productQueryPamas.getSearch()+"%");
             sql=sql + " AND product_name like :search";
         }
 
