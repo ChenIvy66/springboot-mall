@@ -13,6 +13,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import com.chenivy66.springbootmall.dao.UserDao;
+import com.chenivy66.springbootmall.dto.UserLoginRequest;
 import com.chenivy66.springbootmall.dto.UserQueryPamas;
 import com.chenivy66.springbootmall.dto.UserRegisterRequest;
 import com.chenivy66.springbootmall.model.User;
@@ -139,6 +140,9 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    
+
+    
     private void addFilterSql(String sql, Map<String, Object> map, UserQueryPamas userQueryPamas) {
    
         //搜尋

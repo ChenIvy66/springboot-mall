@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class UserRegisterRequest {
+public class UserLoginRequest {
 
     @NotBlank
     @Email

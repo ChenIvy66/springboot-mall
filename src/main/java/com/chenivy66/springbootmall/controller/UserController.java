@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chenivy66.springbootmall.constant.ProductCategory;
 import com.chenivy66.springbootmall.dto.ProductQueryPamas;
+import com.chenivy66.springbootmall.dto.UserLoginRequest;
 import com.chenivy66.springbootmall.dto.UserQueryPamas;
 import com.chenivy66.springbootmall.dto.UserRegisterRequest;
 import com.chenivy66.springbootmall.model.Product;
@@ -42,6 +43,14 @@ public class UserController {
         User user = userService.getByUserId(userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PostMapping("users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest){
+        User user = userService.login(userLoginRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+
     }
 
     @GetMapping("/users/{userId}")
