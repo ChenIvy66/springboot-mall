@@ -33,7 +33,6 @@ public class ProductController {
             ){
 
         ProductQueryPamas productQueryPamas = new ProductQueryPamas();
-        productQueryPamas.setCategory(category);
         productQueryPamas.setSearch(search);
         productQueryPamas.setOrderBy(orderBy);
         productQueryPamas.setSort(sort);

@@ -1,6 +1,5 @@
 package com.chenivy66.springbootmall.dao.Impl;
 
-import com.chenivy66.springbootmall.constant.ProductCategory;
 import com.chenivy66.springbootmall.dao.ProductDao;
 import com.chenivy66.springbootmall.dto.ProductQueryPamas;
 import com.chenivy66.springbootmall.dto.ProductRequest;
@@ -33,7 +32,11 @@ public class ProductDaoImpl implements ProductDao {
         Map<String,Object> map= new HashMap<>();
         addFilterSql(sql,map,productQueryPamas);
 
-        Integer total = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+        Integer total = namedParameterJdbcTemplate.queryForObject(
+            sql, 
+            map, 
+            Integer.class
+            );
 
         return  total;
     }

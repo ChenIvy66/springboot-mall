@@ -1,6 +1,6 @@
 package com.chenivy66.springbootmall.dao;
 
-import com.chenivy66.springbootmall.constant.ProductCategory;
+
 import com.chenivy66.springbootmall.dto.ProductQueryPamas;
 import com.chenivy66.springbootmall.dto.ProductRequest;
 import com.chenivy66.springbootmall.model.Product;
